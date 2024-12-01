@@ -1,3 +1,13 @@
+use crate::day::day_one;
+
+mod day;
+
 fn main() {
-    println!("ADVENT OF CODE!");
+    println!(
+        "{}",
+        format!(
+            "DAY ONE: {}",
+            day_one::distance_between(include_str!("data/day-one.txt"))
+        )
+    )
 }
