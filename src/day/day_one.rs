@@ -28,6 +28,16 @@ fn split_in_list(lines: Lines) -> (Vec<i32>, Vec<i32>) {
     (list_left, list_right)
 }
 
+pub fn similarity_score(input: &str) -> i32 {
+    let lists = split_in_list(input.lines());
+    let mut score = 0;
+    lists.0.iter().for_each(|n| {
+        let count = lists.1.iter().filter(|e| *e == n).count() as i32;
+        score = n * count + score;
+    });
+    score
+}
+
 #[test]
 fn test_distance_between() {
     let input = "3   4
@@ -49,14 +59,4 @@ fn test_similarity_score() {
 3   9
 3   3";
     assert_eq!(31, similarity_score(input))
-}
-
-pub fn similarity_score(input: &str) -> i32 {
-    let lists = split_in_list(input.lines());
-    let mut score = 0;
-    lists.0.iter().for_each(|n| {
-        let count = lists.1.iter().filter(|e| *e == n).count() as i32;
-        score = n * count + score;
-    });
-    score
 }
