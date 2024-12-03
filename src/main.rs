@@ -14,5 +14,9 @@ fn main() {
     println!(
         "Day 2: Red-Nosed Reports: PART ONE - ANSWER {}",
         day_two::reports_is_safe(include_str!("data/day-two.txt"))
+    );
+    println!(
+        "Day 2: Red-Nosed Reports: PART TWO - ANSWER {}",
+        day_two::reports_is_safe_with_one_erro(include_str!("data/day-two.txt"))
     )
 }

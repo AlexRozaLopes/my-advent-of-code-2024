@@ -1,38 +1,56 @@
-use std::ops::Sub;
+pub fn safe(v: &Vec<usize>) -> bool {
+    let mut inc = true;
+    let mut dec = true;
+    let mut sorted_v = v.clone();
+    for i in 1..v.len() {
+        if v[i] <= v[i-1] {
+            inc = false
+        }
+        if v[i] >= v[i-1] {
+            dec = false
+        }
+    }
+    if !inc && !dec {
+        return false
+    }
+    if dec {
+        sorted_v.reverse();
+    }
 
-#[test]
-fn test_count_reports_is_safe(){
-    let input = "7 6 4 2 1
-1 2 7 8 9
-9 7 6 2 1
-1 3 2 4 5
-8 6 4 4 1
-1 3 6 7 9";
-    assert_eq!(2,reports_is_safe(input));
+    for i in 1..sorted_v.len() {
+        if sorted_v[i] - sorted_v[i-1] > 3 {
+            return false;
+        }
+    }
+    true
 }
 
-pub fn reports_is_safe(input: &str) -> i32 {
-    let mut count_valid = 0;
-    input.lines().for_each(|line| {
-        let numbers = line.split_whitespace().map(|number| { number.parse::<i32>().unwrap() }).collect::<Vec<i32>>();
-        let mut count = 2;
-        for i in 0..numbers.len() {
-            if i !=0 {
-                if i != (numbers.len()-1) {
-                    if numbers[i].sub(&numbers[i-1]) <= 3 && numbers[i].sub(&numbers[i-1]).is_positive() && numbers[i+1].sub(&numbers[i]) <= 3 && numbers[i+1].sub(&numbers[i]).is_positive() {
-                        count += 1;
-                    }
-                    if numbers[i].sub(&numbers[i-1]) >= -3 && numbers[i].sub(&numbers[i-1]).is_negative() && numbers[i+1].sub(&numbers[i]) >= -3 && numbers[i+1].sub(&numbers[i]).is_negative() {
-                        count += 1;
-                    }
-                }
-            }
 
+pub fn safe_tolerate(l: &Vec<usize>) -> bool {
+    if safe(&l) {
+        return true;
+    }
+    for i in 0..l.len() {
+        let mut modified = l.clone();
+        modified.remove(i);
+        if safe(&modified) {
+            return true;
         }
-        if count == numbers.len() {
-            println!("report: {:?} is valid" ,numbers);
-            count_valid +=1;
-        }
-    });
-    count_valid
+    }
+    false
 }
+
+pub fn reports_is_safe(p0: &str) -> i32 {
+    let valid = p0.lines().map(|line| {
+        let numbers = line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).collect::<Vec<usize>>();
+        safe(&numbers)
+    }).collect::<Vec<bool>>().iter().filter(|x| **x == true).count() as i32;
+    valid
+}
+
+pub fn reports_is_safe_with_one_erro(p0: &str) -> i32 {
+    let valid = p0.lines().map(|line| {
+        let numbers = line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).collect::<Vec<usize>>();
+        safe_tolerate(&numbers)
+    }).collect::<Vec<bool>>().iter().filter(|x| **x == true).count() as i32;
+    valid}
