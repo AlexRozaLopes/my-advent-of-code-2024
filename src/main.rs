@@ -22,5 +22,9 @@ fn main() {
     println!(
         "Day 3: Mull It Over: PART ONE - ANSWER {}",
         day_three::process(include_str!("data/day-three.txt"))
+    );
+    println!(
+        "Day 3: Mull It Over: PART TWO - ANSWER {}",
+        day_three::process_do_dont(include_str!("data/day-three.txt"))
     )
 }
