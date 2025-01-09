@@ -1,4 +1,4 @@
-use crate::day::{day_one, day_two,day_three};
+use crate::day::{day_one, day_two, day_three, day_four};
 
 mod day;
 
@@ -26,5 +26,10 @@ fn main() {
     println!(
         "Day 3: Mull It Over: PART TWO - ANSWER {}",
         day_three::process_do_dont(include_str!("data/day-three.txt"))
-    )
+    );
+    println!("Day 4: Ceres Search: PART ONE - ANSWER {}",
+    day_four::day_four_first_challenger());
+
+    println!("Day 4: Ceres Search: PART TWO - ANSWER {}",
+    day_four::day_four_second_challenger());
 }
