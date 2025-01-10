@@ -1,4 +1,4 @@
-use crate::day::{day_one, day_two, day_three, day_four};
+use crate::day::{day_one, day_two, day_three, day_four, day_five};
 
 mod day;
 
@@ -32,4 +32,7 @@ fn main() {
 
     println!("Day 4: Ceres Search: PART TWO - ANSWER {}",
     day_four::day_four_second_challenger());
+
+    println!("Day 5: Print Queue: PART ONE - ANSWER {}",
+    day_five::print_queue(include_str!("data/day-five.txt")))
 }
