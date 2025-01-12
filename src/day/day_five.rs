@@ -24,19 +24,19 @@ fn fix_invalid_data<'a>(
     let mut is_valid = false;
 
     while !is_valid {
-        is_valid = true; // Assume que os dados são válidos inicialmente.
+        is_valid = true;
 
         for i in 0..p0.len() {
             if let Some(v) = formated_rules.get(p0[i]) {
-                // Verifica o próximo elemento.
+
                 if i + 1 < p0.len() && !v.contains(&p0[i + 1]) {
-                    p0.swap(i, i + 1); // Corrige a ordem.
-                    is_valid = false; // Marca como inválido para nova iteração.
+                    p0.swap(i, i + 1);
+                    is_valid = false;
                 }
-                // Verifica o elemento anterior.
+
                 else if i > 0 && v.contains(&p0[i - 1]) {
-                    p0.swap(i, i - 1); // Corrige a ordem.
-                    is_valid = false; // Marca como inválido para nova iteração.
+                    p0.swap(i, i - 1);
+                    is_valid = false;
                 }
             }
         }
@@ -48,8 +48,6 @@ fn fix_invalid_data<'a>(
 fn split_in_list_rules_and_data(input: &str) -> (Vec<&str>, Vec<&str>) {
     let (rules,data):(Vec<&str>,Vec<&str>) = input.lines().partition(|l| l.contains('|'));
 
-    println!("rules: {:?}", rules);
-    println!("data: {:?}", data);
     (rules,data)
 }
 
@@ -60,7 +58,6 @@ fn format_rules(rules: Vec<&str>) -> HashMap<&str, Vec<&str>> {
         map.entry(split[0]).and_modify(|v|v.push(split[1])).or_insert(vec![split[1]]);
 
     });
-    println!("rules formated: {:?}", map);
     map
 }
 
@@ -86,7 +83,6 @@ fn show_data_valid(input: &str) -> (Vec<&str>,Vec<Vec<&str>>) {
 
         }
         if is_valid {
-            println!("valid numbers: {:?}", numbers);
             data_valid.push(numbers[numbers.len() /2]);
         } else {
             data_invalid.push(numbers);
