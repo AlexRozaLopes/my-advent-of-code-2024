@@ -1,4 +1,4 @@
-use crate::day::{day_five, day_four, day_one, day_three, day_two};
+use crate::day::{day_five, day_four, day_one, day_six, day_three, day_two};
 
 mod day;
 
@@ -27,15 +27,33 @@ fn main() {
         "Day 3: Mull It Over: PART TWO - ANSWER {}",
         day_three::process_do_dont(include_str!("data/day-three.txt"))
     );
-    println!("Day 4: Ceres Search: PART ONE - ANSWER {}",
-    day_four::day_four_first_challenger());
+    println!(
+        "Day 4: Ceres Search: PART ONE - ANSWER {}",
+        day_four::day_four_first_challenger()
+    );
 
-    println!("Day 4: Ceres Search: PART TWO - ANSWER {}",
-    day_four::day_four_second_challenger());
+    println!(
+        "Day 4: Ceres Search: PART TWO - ANSWER {}",
+        day_four::day_four_second_challenger()
+    );
 
-    println!("Day 5: Print Queue: PART ONE - ANSWER {}",
-    day_five::print_queue(include_str!("data/day-five.txt")));
+    println!(
+        "Day 5: Print Queue: PART ONE - ANSWER {}",
+        day_five::print_queue(include_str!("data/day-five.txt"))
+    );
 
-    println!("Day 6: Print Queue: PART TWO - ANSWER {}",
-             day_five::show_fix_invalid_data(include_str!("data/day-five.txt")));
+    println!(
+        "Day 5: Print Queue: PART TWO - ANSWER {}",
+        day_five::show_fix_invalid_data(include_str!("data/day-five.txt"))
+    );
+
+    println!(
+        "Day 6: Guard Gallivant: PART ONE - ANSWER {}",
+        day_six::part1(include_str!("data/day-six.txt"))
+    );
+
+    println!(
+        "Day 6: Guard Gallivant: PART TWO - ANSWER {}",
+        day_six::part2(include_str!("data/day-six.txt"))
+    );
 }
