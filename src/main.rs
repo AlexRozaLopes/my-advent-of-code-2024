@@ -1,4 +1,4 @@
-use crate::day::{day_five, day_four, day_one, day_six, day_three, day_two};
+use crate::day::{day_five, day_four, day_one, day_seven, day_six, day_three, day_two};
 
 mod day;
 
@@ -55,5 +55,10 @@ fn main() {
     println!(
         "Day 6: Guard Gallivant: PART TWO - ANSWER {}",
         day_six::part2(include_str!("data/day-six.txt"))
+    );
+
+    println!(
+        "Day 7: Bridge Repair: PART ONE - ANSWER {}",
+        day_seven::bridge_repair(include_str!("data/day-seven.txt"))
     );
 }
