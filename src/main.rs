@@ -59,6 +59,11 @@ fn main() {
 
     println!(
         "Day 7: Bridge Repair: PART ONE - ANSWER {}",
-        day_seven::bridge_repair(include_str!("data/day-seven.txt"))
+        day_seven::bridge_repair(include_str!("data/day-seven.txt"), false)
+    );
+
+    println!(
+        "Day 7: Bridge Repair: PART TWO - ANSWER {}",
+        day_seven::bridge_repair(include_str!("data/day-seven.txt"), true)
     );
 }
