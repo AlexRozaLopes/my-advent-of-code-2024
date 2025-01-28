@@ -1,4 +1,4 @@
-use crate::day::{day_five, day_four, day_one, day_seven, day_six, day_three, day_two};
+use crate::day::{day_five, day_four, day_one, day_seven, day_six, day_three, day_two,day_eight};
 
 mod day;
 
@@ -66,4 +66,7 @@ fn main() {
         "Day 7: Bridge Repair: PART TWO - ANSWER {}",
         day_seven::bridge_repair(include_str!("data/day-seven.txt"), true)
     );
+
+    day_eight::main()
+
 }
