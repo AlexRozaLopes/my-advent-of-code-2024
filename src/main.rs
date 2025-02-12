@@ -1,4 +1,6 @@
-use crate::day::{day_five, day_four, day_one, day_seven, day_six, day_three, day_two,day_eight};
+use crate::day::{
+    day_eight, day_five, day_four, day_nine, day_one, day_seven, day_six, day_three, day_two,
+};
 
 mod day;
 
@@ -67,6 +69,10 @@ fn main() {
         day_seven::bridge_repair(include_str!("data/day-seven.txt"), true)
     );
 
-    day_eight::main()
+    day_eight::main();
 
+    println!(
+        "Day 9: Disk Fragmenter: PART ONE - ANSWER {}",
+        day_nine::part1(include_str!("data/day-nine.txt"))
+    );
 }
