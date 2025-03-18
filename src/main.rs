@@ -75,4 +75,9 @@ fn main() {
         "Day 9: Disk Fragmenter: PART ONE - ANSWER {}",
         day_nine::part1(include_str!("data/day-nine.txt"))
     );
+
+    println!(
+        "Day 9: Disk Fragmenter: PART TWO - ANSWER {}",
+        day_nine::part2(include_str!("data/day-nine.txt"))
+    );
 }
