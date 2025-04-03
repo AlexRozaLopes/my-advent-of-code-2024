@@ -1,6 +1,4 @@
-use crate::day::{
-    day_eight, day_five, day_four, day_nine, day_one, day_seven, day_six, day_three, day_two,
-};
+use crate::day::{day_eight, day_five, day_four, day_nine, day_one, day_seven, day_six, day_ten, day_three, day_two};
 
 mod day;
 
@@ -80,4 +78,6 @@ fn main() {
         "Day 9: Disk Fragmenter: PART TWO - ANSWER {}",
         day_nine::part2(include_str!("data/day-nine.txt"))
     );
+
+    println!("Day 10: Hoof It: PART ONE - ANSWER {}", day_ten::total_trailhead_score(include_str!("data/day-ten.txt")))
 }
