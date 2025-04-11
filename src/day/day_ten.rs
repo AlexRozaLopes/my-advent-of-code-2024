@@ -1,71 +1,99 @@
-use std::collections::{VecDeque, HashSet};
+use std::collections::{HashSet, HashMap, VecDeque};
 
-pub fn parse_map(input: &str) -> Vec<Vec<u8>> {
-    input.lines()
-        .map(|line| line.chars().map(|c| c.to_digit(10).unwrap() as u8).collect())
-        .collect()
+type Point = (usize, usize);
+
+pub fn parse_input(input: &str) -> Vec<Vec<u8>> {
+    input.lines().map(|line| line.chars().map(|c| c as u8 - b'0').collect()).collect()
 }
 
-pub fn find_trailheads(map: &[Vec<u8>]) -> Vec<(usize, usize)> {
-    let mut trailheads = Vec::new();
-    for (row, line) in map.iter().enumerate() {
-        for (col, &height) in line.iter().enumerate() {
-            if height == 0 {
-                trailheads.push((row, col));
-            }
-        }
-    }
-    trailheads
+fn neighbors((x, y): Point, height: usize, width: usize) -> Vec<Point> {
+    let mut result = vec![];
+    if x > 0 { result.push((x - 1, y)); }
+    if y > 0 { result.push((x, y - 1)); }
+    if x + 1 < height { result.push((x + 1, y)); }
+    if y + 1 < width { result.push((x, y + 1)); }
+    result
 }
 
-pub fn count_reachable_nines(map: &[Vec<u8>], start: (usize, usize)) -> usize {
-    let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)];
-    let mut queue = VecDeque::new();
+// Parte 1
+fn score_trailhead(map: &[Vec<u8>], start: Point) -> usize {
+    let (h, w) = (map.len(), map[0].len());
     let mut visited = HashSet::new();
-    let mut reachable_nines = HashSet::new();
-
+    let mut queue = VecDeque::new();
     queue.push_back(start);
-    visited.insert(start);
+    let mut found = HashSet::new();
 
-    while let Some((r, c)) = queue.pop_front() {
-        let current_height = map[r][c];
+    while let Some((x, y)) = queue.pop_front() {
+        if visited.contains(&(x, y)) {
+            continue;
+        }
+        visited.insert((x, y));
+        let current = map[x][y];
 
-        for &(dr, dc) in &directions {
-            let new_r = r as isize + dr;
-            let new_c = c as isize + dc;
+        if current == 9 {
+            found.insert((x, y));
+            continue;
+        }
 
-            if new_r >= 0 && new_c >= 0 {
-                let new_r = new_r as usize;
-                let new_c = new_c as usize;
-
-                if new_r < map.len() && new_c < map[0].len() {
-                    let new_height = map[new_r][new_c];
-
-                    if new_height == current_height + 1 && visited.insert((new_r, new_c)) {
-                        queue.push_back((new_r, new_c));
-                        if new_height == 9 {
-                            reachable_nines.insert((new_r, new_c));
-                        }
-                    }
-                }
+        for (nx, ny) in neighbors((x, y), h, w) {
+            if map[nx][ny] == current + 1 {
+                queue.push_back((nx, ny));
             }
         }
     }
 
-    reachable_nines.len()
+    found.len()
 }
 
-pub fn total_trailhead_score(input: &str) -> usize {
-    let map = parse_map(input);
-    let trailheads = find_trailheads(&map);
+// Parte 2
+fn count_paths(map: &[Vec<u8>], pos: Point, cache: &mut HashMap<Point, usize>) -> usize {
+    if map[pos.0][pos.1] == 9 {
+        return 1;
+    }
+    if let Some(&cached) = cache.get(&pos) {
+        return cached;
+    }
 
-    trailheads.iter()
-        .map(|&start| count_reachable_nines(&map, start))
-        .sum()
+    let (h, w) = (map.len(), map[0].len());
+    let mut count = 0;
+    let current = map[pos.0][pos.1];
+    for (nx, ny) in neighbors(pos, h, w) {
+        if map[nx][ny] == current + 1 {
+            count += count_paths(map, (nx, ny), cache);
+        }
+    }
+    cache.insert(pos, count);
+    count
 }
+
+pub fn part1(map: &[Vec<u8>]) -> usize {
+    let mut total = 0;
+    for x in 0..map.len() {
+        for y in 0..map[0].len() {
+            if map[x][y] == 0 {
+                total += score_trailhead(map, (x, y));
+            }
+        }
+    }
+    total
+}
+
+pub fn part2(map: &[Vec<u8>]) -> usize {
+    let mut total = 0;
+    for x in 0..map.len() {
+        for y in 0..map[0].len() {
+            if map[x][y] == 0 {
+                let mut cache = HashMap::new();
+                total += count_paths(map, (x, y), &mut cache);
+            }
+        }
+    }
+    total
+}
+
 
 #[test]
-fn test() {
+fn test_example_map() {
     let input = "89010123
 78121874
 87430965
@@ -73,9 +101,9 @@ fn test() {
 45678903
 32019012
 01329801
-10456732"; // Substitua pelo seu input real
+10456732";
 
-    let result = total_trailhead_score(input);
-    println!("Soma dos scores dos trailheads: {}", result);
-    assert_eq!(0,0)
+    let map = parse_input(input);
+    assert_eq!(part1(&map), 36);
+    assert_eq!(part2(&map), 81);
 }
