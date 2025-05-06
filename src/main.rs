@@ -1,7 +1,4 @@
-use crate::day::{
-    day_eight, day_five, day_four, day_nine, day_one, day_seven, day_six, day_ten, day_three,
-    day_two,
-};
+use crate::day::{day_eight, day_eleven, day_five, day_four, day_nine, day_one, day_seven, day_six, day_ten, day_three, day_two};
 
 mod day;
 
@@ -89,5 +86,8 @@ fn main() {
     println!(
         "Day 10: Hoof It: PART TWO - ANSWER {}",
         day_ten::part2(&*day_ten::parse_input(include_str!("data/day-ten.txt")))
-    )
+    );
+
+    println!("Day 11: Plutonian Pebbles: PART ONE - ANSWER {}", day_eleven::solve(include_str!("data/day-eleven.txt"),25));
+    println!("Day 11: Plutonian Pebbles: PART TWO - ANSWER {}", day_eleven::solve(include_str!("data/day-eleven.txt"),75));
 }
